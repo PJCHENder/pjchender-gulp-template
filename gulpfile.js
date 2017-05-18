@@ -10,7 +10,7 @@ const inject = require('gulp-inject')
 // Static Server + watching scss/html files
 gulp.task('serve', ['inject-index'], function () {
   browserSync.init({
-    server: './dist/'
+    server: './'
   })
 
   gulp.watch('src/views/*.pug', ['inject-index', 'browser-reload'])
@@ -82,7 +82,5 @@ gulp.task('inject-index', ['pug-compile', 'sass', 'concat-js'], function () {
     .pipe(browserSync.stream())
 })
 
-gulp.task('dev-pug', ['inject-index', 'serve'])
+gulp.task('default', ['inject-index', 'serve'])
 gulp.task('dev', ['clean-css', 'inject-index', 'serve'])
-gulp.task('default', ['clean-css', 'concat-js', 'serve'])
-gulp.task('build', ['clean-css', 'concat-js'])
