@@ -4,7 +4,7 @@ const concat = require('gulp-concat')
 const browserSync = require('browser-sync').create()
 const sass = require('gulp-sass')
 const cleanCSS = require('gulp-clean-css')
-const pug = require('gulp-pug')
+// const pug = require('gulp-pug')
 // const inject = require('gulp-inject')
 
 // inject link into html
@@ -19,18 +19,18 @@ const pug = require('gulp-pug')
 // })
 
 // Static Server + watching scss/html files
-gulp.task('serve', ['pug-compile', 'sass', 'concat-js'], function () {
+gulp.task('serve', ['move-html', 'sass', 'concat-js'], function () {
   browserSync.init({
     server: './dist'
   })
 
-  gulp.watch('src/views/*.pug', ['browser-reload'])
+  gulp.watch('src/views/*.html', ['browser-reload'])
   gulp.watch('src/sass/*.scss', ['browser-reload'])
   gulp.watch('src/js/*.js', ['browser-reload'])
   // gulp.watch('*.html').on('change', browserSync.reload)
 })
 
-gulp.task('browser-reload', ['pug-compile', 'sass', 'concat-js'], function () {
+gulp.task('browser-reload', ['move-html', 'sass', 'concat-js'], function () {
   browserSync.stream()
 })
 
@@ -66,11 +66,18 @@ gulp.task('clean-css', ['sass'], function () {
 })
 
 //  將 pug 轉成 HTML
-gulp.task('pug-compile', function () {
-  return gulp.src('src/views/*.pug')
-        .pipe(pug({
-          // Your options in here.
-        }))
+// gulp.task('pug-compile', function () {
+//   return gulp.src('src/views/*.pug')
+//         .pipe(pug({
+//           // Your options in here.
+//         }))
+//         .pipe(gulp.dest('./dist'))
+//         .pipe(browserSync.stream())
+// })
+
+//  Move HTML to dist folder
+gulp.task('move-html', function () {
+  return gulp.src('src/views/*.html')
         .pipe(gulp.dest('./dist'))
         .pipe(browserSync.stream())
 })
