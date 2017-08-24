@@ -5,18 +5,6 @@ const browserSync = require('browser-sync').create()
 const sass = require('gulp-sass')
 const cleanCSS = require('gulp-clean-css')
 const pug = require('gulp-pug')
-// const inject = require('gulp-inject')
-
-// inject link into html
-// gulp.task('inject-index', ['pug-compile', 'sass', 'concat-js'], function () {
-//   var target = gulp.src('./dist/index.html')
-//   // It's not necessary to read the files (will speed up things), we're only after their paths:
-//   var sources = gulp.src(['./dist/*.js', './dist/*.css'], {read: false})
-
-//   return target.pipe(inject(sources, {relative: true}))
-//     .pipe(gulp.dest('./dist'))
-//     .pipe(browserSync.stream())
-// })
 
 // Static Server + watching scss/html files
 gulp.task('serve', ['pug-compile', 'sass', 'concat-js'], function () {
@@ -24,10 +12,10 @@ gulp.task('serve', ['pug-compile', 'sass', 'concat-js'], function () {
     server: './dist'
   })
 
+  gulp.watch('src/views/*.html', ['browser-reload'])
   gulp.watch('src/views/*.pug', ['browser-reload'])
   gulp.watch('src/sass/*.scss', ['browser-reload'])
   gulp.watch('src/js/*.js', ['browser-reload'])
-  // gulp.watch('*.html').on('change', browserSync.reload)
 })
 
 gulp.task('browser-reload', ['pug-compile', 'sass', 'concat-js'], function () {
@@ -74,5 +62,12 @@ gulp.task('pug-compile', function () {
         .pipe(gulp.dest('./dist'))
         .pipe(browserSync.stream())
 })
+
+//  Move HTML to dist folder
+// gulp.task('move-html', function () {
+//   return gulp.src('src/views/*.html')
+//         .pipe(gulp.dest('./dist'))
+//         .pipe(browserSync.stream())
+// })
 
 gulp.task('default', ['serve'])
