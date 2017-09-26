@@ -1,5 +1,5 @@
 const gulp = require('gulp')
-const $    = require('gulp-load-plugins')()
+const $ = require('gulp-load-plugins')()
 const concat = require('gulp-concat')
 const browserSync = require('browser-sync').create()
 const sass = require('gulp-sass')
@@ -23,10 +23,10 @@ gulp.task('browser-reload', ['move-html', 'sass', 'concat-js'], function () {
 //  將不同的 js 檔案合併在同一支當中
 gulp.task('concat-js', function () {
   return gulp.src([
-    'vendor/jquery-3.1.1.js',
-    'vendor/tether.min.js',
+    'vendor/jquery-3.2.1.min.js',
+    'vendor/popper.min.js',
     'vendor/bootstrap.min.js',
-    'vendor/lodash.min.js',
+    // 'vendor/lodash.min.js',
     'src/js/*.js'
   ])
         .pipe(concat('main.js'))
@@ -35,11 +35,12 @@ gulp.task('concat-js', function () {
 
 // Compile sass into CSS & auto-inject into browsers
 gulp.task('sass', function () {
-  return gulp.src('src/sass/*.scss')
+  return gulp.src(['./vendor/*.css', 'src/sass/*.scss'])
         .pipe(sass())
         .pipe($.autoprefixer({
           browsers: ['last 2 versions', 'ie >= 9']
         }))
+        .pipe(concat('style.css'))
         .pipe(gulp.dest('./dist'))
 })
 
