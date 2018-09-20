@@ -30,3 +30,6 @@ npm run start
 
 Enjoy using browserSync while coding.
 
+## Notes
+
+- 如果 function 有 return 就不用呼叫 `next()`，沒有的話則需要呼叫 `next()`，否則會被認為是沒影終止的非同步事件
